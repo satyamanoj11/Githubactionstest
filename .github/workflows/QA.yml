@@ -36,7 +36,7 @@ jobs:
       # Authenticate the target org for validation and deployment
       - name: "Authentication to target Org"
         env:
-          NANIORG_SECRET: ${{secrets.SFDXAUTHURL_NANIDEV_S}}
+          SF_QA_ORG__AUTH_URL: ${{ secrets.SF_QA_ORG__AUTH_URL }}
         run: |
           echo "$NANIORG_SECRET" > ./SFDX_URL.txt
           sf org login sfdx-url --set-default -f ./SFDX_URL.txt
