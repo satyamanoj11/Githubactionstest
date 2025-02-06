@@ -19,7 +19,7 @@ steps:
    echo "$nodeInstallPath/bin">> $GITHUB_PATH
    npm fund
    sf --version
-#Install SGD plugin for delta package
+# Install SGD plugin for delta package
  -name: "Install SGD Plugin"
 #run: "sf plugins install sfdx-git-delta --help"
  run: |
