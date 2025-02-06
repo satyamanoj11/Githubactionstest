@@ -5,7 +5,6 @@ on:
     branches:
       - 'featureQA/**'
 
-
 jobs:
   validate_Sf_Deployment:
     runs-on: ubuntu-latest
@@ -49,4 +48,4 @@ jobs:
           echo "---package.xml generated with added and modified metadata---"
           cat package/package.xml
           echo
-        sf project deploy validate --dry-run -x package/package.xml 
+      sf project deploy validate --dry-run -x package/package.xml 
