@@ -10,7 +10,7 @@ pull_request:
 jobs:
 validate_Salesforce_Deployment:
  runs-on:ubuntu-latest
-  steps:
+steps:
   #Install Salesforce CLI
   -name: "Install Salesforce CLI"
   run: |
