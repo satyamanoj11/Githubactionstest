@@ -44,7 +44,7 @@ jobs:
       # Delta package deployment
       - name: "Delta Deploy"
         run : |
-          sf sgd source delta --to "HEAD" --from "origin/QAT" --output "." -i .forceignore
+          sf sgd source delta --to "HEAD" --from "HEAD~1" --output "." -i .forceignore
           echo "---package.xml generated with added and modified metadata---"
           cat package/package.xml
           echo
