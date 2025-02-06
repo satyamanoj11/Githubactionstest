@@ -20,8 +20,8 @@ steps:
    npm fund
    sf --version
 #Install SGD plugin for delta package
--name: "Install SGD Plugin"
- run: "sf plugins install sfdx-git-delta --help"
+- name: "Install SGD Plugin"
+run: "sf plugins install sfdx-git-delta --help"
  run: |
  echo y | sf plugins install sfdx-git-delta
  sfdx plugins
