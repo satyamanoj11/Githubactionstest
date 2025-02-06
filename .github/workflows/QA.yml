@@ -49,4 +49,4 @@ jobs:
           echo "---package.xml generated with added and modified metadata---"
           cat package/package.xml
           echo
-      sf project deploy start --dry-run -x package/package.xml --checkonly
+          sf project deploy start --dry-run -x package/package.xml --checkonly
