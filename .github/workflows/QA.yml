@@ -11,7 +11,7 @@ jobs:
 validate_Salesforce_Deployment:
  runs-on:ubuntu-latest
 steps:
-  #Install Salesforce CLI
+  # Install Salesforce CLI
   - name: "Install Salesforce CLI"
   run: |
    npm install @salesforce/cli --location=global
@@ -21,7 +21,7 @@ steps:
    sf --version
 # Install SGD plugin for delta package
  - name: "Install SGD Plugin"
-#run: "sf plugins install sfdx-git-delta --help"
+# run: "sf plugins install sfdx-git-delta --help"
  run: |
  echo y | sf plugins install sfdx-git-delta
  sfdx plugins
@@ -31,13 +31,13 @@ steps:
 run: |
 pip install yq
 xq ---version
-#checkout the code in the feature branch 
+# checkout the code in the feature branch 
 - name: Checkout
 uses: actions/checkout@v4
 with:
  fetch-depth: 0
 
-#Authenticate the target org for validation and deployment
+# Authenticate the target org for validation and deployment
 - name: "Authentication to target Org"
 env:
 NANIORG_SECRET: ${{secrets.SFDXAUTHURL_NANIDEV_S}}
