@@ -1,7 +1,7 @@
 name: Nani Org Sample Validation
 
 on:
-  pull_request:
+  push:
     branches:
       - 'featureQA/**'
 
@@ -15,8 +15,7 @@ jobs:
         run: |
           npm install @salesforce/cli --location=global
           nodeInstallPath=$(npm config get prefix)
-          echo "$nodeInstallPath/bin">> $GITHUB_PATH
-          npm fund
+          echo "$nodeInstallPath/bin" >> $GITHUB_PATH
           sf --version
       # Install SGD plugin for delta package
       - name: "Install SGD Plugin"
@@ -24,8 +23,8 @@ jobs:
         run: |
           echo y | sf plugins install sfdx-git-delta
           sfdx plugins
-      # Install Utilities
-      - name: Install utilities"
+      # Install utilities
+      - name: Install utilities
         run: |
          pip install yq
          xq --version
@@ -44,7 +43,7 @@ jobs:
           sf org list
       # Delta package deployment
       - name: "Delta Deploy"
-        run : |
+        run: |
           sf sgd source delta --to "HEAD" --from "origin/QAN" --output "." -i .forceignore
           echo "---package.xml generated with added and modified metadata---"
           cat package/package.xml
