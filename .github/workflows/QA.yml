@@ -1,4 +1,4 @@
-name: Salesforce B2B-QA Deployment
+name: Satya Test Org Deploymwent
 
 on:
   
@@ -7,9 +7,9 @@ on:
       - 'featureTQA/**'
 
 jobs:
-  b2b_qa_deployment:
+  Test_Org_Deployment:
     runs-on: ubuntu-latest
-    environment: QA_UAT
+    environment: QA_SECRET
     steps:
       # Install Salesforce CLI
       - name: "Install Salesforce CLI"
