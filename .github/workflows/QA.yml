@@ -1,51 +1,54 @@
-name: Nani Org Sample Validation
+name: Salesforce B2B-QA Deployment
 
 on:
-  pull_request:
+  
+  push:
     branches:
-      - 'featureQA/**'
+      - 'featureTQA/**'
 
 jobs:
-  validate_Sf_Deployment:
+  b2b_qa_deployment:
     runs-on: ubuntu-latest
+    environment: SFDX_URL_QA
     steps:
       # Install Salesforce CLI
       - name: "Install Salesforce CLI"
         run: |
           npm install @salesforce/cli --location=global
           nodeInstallPath=$(npm config get prefix)
-          echo "$nodeInstallPath/bin">> $GITHUB_PATH
-          npm fund
+          echo "$nodeInstallPath/bin" >> $GITHUB_PATH
           sf --version
-      # Install SGD plugin for delta package
+      # Install SGD Plugin
       - name: "Install SGD Plugin"
         # run: "sf plugins install sfdx-git-delta --help"
         run: |
           echo y | sf plugins install sfdx-git-delta
           sfdx plugins
-      # Install Utilities
-      - name: Install utilities"
+      # Install utilities
+      - name: Install utilities
         run: |
          pip install yq
-         xq ---version
-      # checkout the code in the feature branch 
+         xq --version
+      # Checkout the code in the pull request
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      # Authenticate the target org for validation and deployment
-      - name: "Authentication to target Org"
+      # Authenticate to target org
+      - name: "Authenticate to Org"
         env:
-          SF_QA_ORG__AUTH_URL: ${{ secrets.SF_QA_ORG__AUTH_URL }}
+          QA_SECRET: ${{ secrets.SFDXAUTHURL_PARTIAL_S }}
         run: |
-          echo "$NANIORG_SECRET" > ./SFDX_URL.txt
+          echo "$QA_SECRET" > ./SFDX_URL.txt
           sf org login sfdx-url --set-default -f ./SFDX_URL.txt
           sf org list
-      # Delta package deployment
-      - name: "Delta Deploy"
-        run : |
+      # Delta deploy
+      - name: "Delta deploy"
+        run: |
+          #sf sgd source delta --to "HEAD" --from "origin/main" --output "." -i .forceignore
           sf sgd source delta --to "HEAD" --from "HEAD~1" --output "." -i .forceignore
-          echo "---package.xml generated with added and modified metadata---"
+          echo "--- package.xml generated with added and modified metadata ---"
           cat package/package.xml
           echo
-          sf project deploy validate -x package/package.xml
+          echo "--- Delta Deploy ---"  
+          sf project deploy start -x package/package.xml
