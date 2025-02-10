@@ -8,7 +8,7 @@ on:
 jobs:
   validate_Sf_Deployment:
     runs-on: ubuntu-latest
-    environment: SFDX_URL_QA
+    environment: QA_SECRET
     steps:
       # Install Salesforce CLI
       - name: "Install Salesforce CLI"
@@ -37,15 +37,15 @@ jobs:
       # Authenticate the target org for validation and deployment
       - name: "Authentication to target Org"
         env:
-          NANIORG_SECRET: ${{ secrets.SFDXAUTHURL_PARTIAL_S }}
+          QA_SECRET: ${{ secrets.QA_SECRET}}
         run: |
-          echo "$NANIORG_SECRET" > ./SFDX_URL.txt
+          echo "$QA_SECRET" > ./SFDX_URL.txt
           sf org login sfdx-url --set-default -f ./SFDX_URL.txt
           sf org list
       # Delta package deployment
       - name: "Delta Deploy"
         run : |
-          sf sgd source delta --to "HEAD" --from "HEAD~1" --output "." -i .forceignore
+          sf sgd source delta --to "HEAD" --from "origin/QAN" --output "." -i .forceignore
           echo "---package.xml generated with added and modified metadata---"
           cat package/package.xml
           echo
