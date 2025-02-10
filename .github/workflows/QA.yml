@@ -9,7 +9,7 @@ on:
 jobs:
   b2b_qa_deployment:
     runs-on: ubuntu-latest
-    environment: SFDX_URL_QA
+    environment: QA_SECRET
     steps:
       # Install Salesforce CLI
       - name: "Install Salesforce CLI"
@@ -37,7 +37,7 @@ jobs:
       # Authenticate to target org
       - name: "Authenticate to Org"
         env:
-          QA_SECRET: ${{ secrets.SFDXAUTHURL_PARTIAL_S }}
+          QA_SECRET: ${{ secrets.QA_SECRET}}
         run: |
           echo "$QA_SECRET" > ./SFDX_URL.txt
           sf org login sfdx-url --set-default -f ./SFDX_URL.txt
@@ -45,8 +45,7 @@ jobs:
       # Delta deploy
       - name: "Delta deploy"
         run: |
-          #sf sgd source delta --to "HEAD" --from "origin/main" --output "." -i .forceignore
-          sf sgd source delta --to "HEAD" --from "HEAD~1" --output "." -i .forceignore
+          sf sgd source delta --to "HEAD" --from "origin/QAN" --output "." -i .forceignore
           echo "--- package.xml generated with added and modified metadata ---"
           cat package/package.xml
           echo
