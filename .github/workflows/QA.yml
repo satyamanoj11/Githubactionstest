@@ -6,7 +6,7 @@ on:
       - 'featureQA/**'
 
 jobs:
-  validate_Sf_Deployment:
+  Nani_Org_Sample_Validation:
     runs-on: ubuntu-latest
     environment: QA_SECRET
     steps:
