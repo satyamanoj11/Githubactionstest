@@ -9,7 +9,7 @@ on:
 jobs:
   b2b_qa_deployment:
     runs-on: ubuntu-latest
-    environment: QA_SECRET
+    environment: QA_UAT
     steps:
       # Install Salesforce CLI
       - name: "Install Salesforce CLI"
